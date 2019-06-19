@@ -74,9 +74,9 @@ def call(Map parameters = [:], body) {
                                 workingDir: '/home/jenkins/',
                                 //resourceLimitMemory: '640Mi',
                                 envVars: [
-                                        envVar(key: '_JAVA_OPTIONS', value: javaOptions),
-                                        envVar(key: 'MAVEN_OPTS', value: mavenOpts),
-                                        envVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')])],
+                                        templateEnvVar(key: '_JAVA_OPTIONS', value: javaOptions),
+                                        templateEnvVar(key: 'MAVEN_OPTS', value: mavenOpts),
+                                        templateEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')])],
                 volumes: [
                         secretVolume(secretName: 'jenkins-maven-settings', mountPath: '/home/jenkins/.m2'),
                         secretVolume(secretName: 'jenkins-docker-cfg', mountPath: '/home/jenkins/.docker'),
