@@ -5,7 +5,7 @@ def call(Map parameters = [:], body) {
     def defaultLabel = buildId('maven')
     def label = parameters.get('label', defaultLabel)
 
-    def nodesDir = "/var/lib/jenkins/nodes"
+    def nodesDir = "/var/jenkins_home/nodes"
     def file = new File(nodesDir)
     
     if(file.isDirectory()){
