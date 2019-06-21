@@ -62,6 +62,11 @@ def call(Map parameters = [:], body) {
         podTemplate(cloud: cloud,
                 label: label,
                 inheritFrom: "${inheritFrom}",
+                yaml:
+"""spec:
+  containers:
+    securityContext:
+      runAsUser: 1000""",
                 containers: [
                         containerTemplate(
                                 //[name: 'jnlp', image: "${jnlpImage}", args: '${computer.jnlpmac} ${computer.name}'],
