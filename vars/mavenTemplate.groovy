@@ -25,7 +25,12 @@ def call(Map parameters = [:], body) {
         def mavenOpts = parameters.get('mavenOpts', '-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn')
 
         podTemplate(cloud: cloud, label: label, inheritFrom: "${inheritFrom}", serviceAccount: 'jenkins',
-                containers: [
+                yaml: """
+spec:
+  securityContext:
+    runAsUser: 1000
+    allowPrivilegeEscalation: false""",
+                    containers: [
                         containerTemplate(
                                 name: 'jnlp',
                                 image: "${jnlpImage}",
@@ -64,10 +69,9 @@ def call(Map parameters = [:], body) {
                 inheritFrom: "${inheritFrom}",
                 yaml: """
 spec:
-  containers:
-    securityContext:
-      runAsUser: 1000
-      allowPrivilegeEscalation: false""",
+  securityContext:
+    runAsUser: 1000
+    allowPrivilegeEscalation: false""",
                 containers: [
                         containerTemplate(
                                 //[name: 'jnlp', image: "${jnlpImage}", args: '${computer.jnlpmac} ${computer.name}'],
