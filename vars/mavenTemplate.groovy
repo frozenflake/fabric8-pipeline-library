@@ -40,8 +40,8 @@ def call(Map parameters = [:], body) {
                                 ttyEnabled: true,
                                 workingDir: '/home/jenkins/',
                                 envVars: [
-                                        podEnvVar(key: '_JAVA_OPTIONS', value: javaOptions),
-                                        podEnvVar(key: 'MAVEN_OPTS', value: mavenOpts)
+                                        containerEnvVar(key: '_JAVA_OPTIONS', value: javaOptions),
+                                        containerEnvVar(key: 'MAVEN_OPTS', value: mavenOpts)
                                 ],
                                 resourceLimitMemory: '640Mi')],
                 volumes: [
@@ -74,9 +74,9 @@ def call(Map parameters = [:], body) {
                                 workingDir: '/home/jenkins/',
                                 //resourceLimitMemory: '640Mi',
                                 envVars: [
-                                        podEnvVar(key: '_JAVA_OPTIONS', value: javaOptions),
-                                        podEnvVar(key: 'MAVEN_OPTS', value: mavenOpts),
-                                        podEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')])],
+                                        containerEnvVar(key: '_JAVA_OPTIONS', value: javaOptions),
+                                        containerEnvVar(key: 'MAVEN_OPTS', value: mavenOpts),
+                                        containerEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')])],
                 volumes: [
                         secretVolume(secretName: 'jenkins-maven-settings', mountPath: '/home/jenkins/.m2'),
                         secretVolume(secretName: 'jenkins-docker-cfg', mountPath: '/home/jenkins/.docker'),
