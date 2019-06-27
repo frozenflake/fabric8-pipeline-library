@@ -86,6 +86,7 @@ spec:
                                 envVars: [
                                         containerEnvVar(key: '_JAVA_OPTIONS', value: javaOptions),
                                         containerEnvVar(key: 'MAVEN_OPTS', value: mavenOpts),
+                                        containerEnvVar(key: 'DOCKER_HOST', value: 'tcp://localhost:2375'),
                                         containerEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')])],
                 volumes: [
                         secretVolume(secretName: 'jenkins-maven-settings', mountPath: '/home/jenkins/.m2'),
