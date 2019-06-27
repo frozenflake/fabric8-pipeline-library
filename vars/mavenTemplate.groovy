@@ -25,11 +25,6 @@ def call(Map parameters = [:], body) {
         def mavenOpts = parameters.get('mavenOpts', '-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn')
 
         podTemplate(cloud: cloud, label: label, inheritFrom: "${inheritFrom}", serviceAccount: 'jenkins',
-                yaml: """
-spec:
-  securityContext:
-    runAsUser: 1000
-    allowPrivilegeEscalation: false""",
                     containers: [
                         containerTemplate(
                                 name: 'jnlp',
@@ -67,11 +62,6 @@ spec:
         podTemplate(cloud: cloud,
                 label: label,
                 inheritFrom: "${inheritFrom}",
-                yaml: """
-spec:
-  securityContext:
-    runAsUser: 1000
-    allowPrivilegeEscalation: false""",
                 containers: [
                         containerTemplate(
                                 //[name: 'jnlp', image: "${jnlpImage}", args: '${computer.jnlpmac} ${computer.name}'],
@@ -86,7 +76,7 @@ spec:
                                 envVars: [
                                         containerEnvVar(key: '_JAVA_OPTIONS', value: javaOptions),
                                         containerEnvVar(key: 'MAVEN_OPTS', value: mavenOpts),
-                                        containerEnvVar(key: 'DOCKER_HOST', value: 'tcp://localhost:2375'),
+                                        containerEnvVar(key: 'DOCKER_HOST', value: 'http://localhost:2375'),
                                         containerEnvVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')])],
                 volumes: [
                         secretVolume(secretName: 'jenkins-maven-settings', mountPath: '/home/jenkins/.m2'),
