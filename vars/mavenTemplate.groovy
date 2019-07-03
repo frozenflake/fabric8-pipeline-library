@@ -23,7 +23,7 @@ metadata:
 spec:
   containers:
     - name: jnlp
-      image: ${jnlpImage}
+      image: fabric8/jenkins-jnlp-client:2.2.311
       tty: true
       securityContext:
         runAsUser: 1000
@@ -46,7 +46,7 @@ spec:
     if (utils.isUseOpenShiftS2IForBuilds()) {
         def mavenOpts = parameters.get('mavenOpts', '-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn')
 
-        podTemplate(cloud: cloud, label: label, inheritFrom: "${inheritFrom}", serviceAccount: 'jenkins', yaml: yaml,
+        podTemplate(cloud: cloud, label: label, inheritFrom: "${inheritFrom}", serviceAccount: 'jenkins',
                     containers: [
                         containerTemplate(
                                 name: 'jnlp',
