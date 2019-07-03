@@ -83,7 +83,7 @@ spec:
         podTemplate(cloud: cloud,
                 label: label,
                 inheritFrom: "${inheritFrom}",
-                yaml: yaml,
+                yaml: "${yaml}",
                 containers: [
                         containerTemplate(
                                 //[name: 'jnlp', image: "${jnlpImage}", args: '${computer.jnlpmac} ${computer.name}'],
