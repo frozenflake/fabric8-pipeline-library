@@ -16,9 +16,10 @@ def call(Map parameters = [:], body) {
 apiVersion: v1
 kind: Pod
 metadata:
-  generateName: jnlp-
+  generateName: kubernetes-
   labels:
-    ${label}
+    jenkins=slave
+    jenkins/${label}=true
 spec:
   containers:
     - name: jnlp
