@@ -30,6 +30,7 @@ spec:
        runAsUser: 1000
        allowPrivilegeEscalation: false
 """
+    echo "${yaml}"
     def cloud = flow.getCloudConfig()
 
     /*
