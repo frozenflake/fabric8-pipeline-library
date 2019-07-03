@@ -15,6 +15,10 @@ def call(Map parameters = [:], body) {
     def yaml = """
 apiVersion: v1
 kind: Pod
+metadata:
+  generateName: jnlp-
+  labels:
+    ${label}
 spec:
   containers:
     - name: jnlp
