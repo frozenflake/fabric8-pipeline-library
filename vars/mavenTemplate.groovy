@@ -21,6 +21,9 @@ metadata:
     jenkins=slave
     jenkins/${label}=true
 spec:
+  securityContext:
+    runAsUser: 1000
+    allowPrivilegeEscalation: false
   containers:
     - name: jnlp
       image: fabric8/jenkins-jnlp-client:2.2.311
