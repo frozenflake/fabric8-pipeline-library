@@ -38,7 +38,7 @@ def call(Map parameters = [:], body) {
                                 command: '/bin/bash -c',
                                 args: 'cat',
                                 ttyEnabled: true,
-                                workingDir: '/home/jenkins/',
+                                //workingDir: '/home/jenkins/',
                                 envVars: [
                                         containerEnvVar(key: '_JAVA_OPTIONS', value: javaOptions),
                                         containerEnvVar(key: 'MAVEN_OPTS', value: mavenOpts)
@@ -71,7 +71,7 @@ def call(Map parameters = [:], body) {
                                 args: 'cat',
                                 ttyEnabled: true,
                                 alwaysPullImage: false,
-                                workingDir: '/home/jenkins/',
+                                //workingDir: '/home/jenkins/',
                                 //resourceLimitMemory: '640Mi',
                                 envVars: [
                                         containerEnvVar(key: '_JAVA_OPTIONS', value: javaOptions),
