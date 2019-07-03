@@ -23,17 +23,17 @@ metadata:
 spec:
   containers:
     - name: jnlp
-    image: ${jnlpImage}
-    tty: true
-    securityContext:
-      runAsUser: 1000
-      allowPrivilegeEscalation: false
+      image: ${jnlpImage}
+      tty: true
+      securityContext:
+        runAsUser: 1000
+        allowPrivilegeEscalation: false
     - name: maven
       image: ${mavenImage}
       tty: true
       securityContext:
-       runAsUser: 1000
-       allowPrivilegeEscalation: false
+        runAsUser: 1000
+        allowPrivilegeEscalation: false
 """
     echo "${yaml}"
     def cloud = flow.getCloudConfig()
