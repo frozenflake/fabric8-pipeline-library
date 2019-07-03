@@ -13,10 +13,26 @@ def call(Map parameters = [:], body) {
     def jnlpImage = (flow.isOpenShift()) ? 'quay.io/openshift/origin-jenkins-agent-base:v4.0' : 'jenkinsci/jnlp-slave:2.62'
     def inheritFrom = parameters.get('inheritFrom', 'base')
     def yaml = """
+apiVersion: v1
+kind: Pod
+metadata:
+  generateName: kubernetes-
+  labels:
+    podLabel=abc
 spec:
-  securityContext:
-    runAsUser: 1000
-    allowPrivilegeEscalation: false
+  containers:
+    - name: jnlp
+    image: fabric8/jenkins-jnlp-client:2.2.311
+    tty: true
+    securityContext:
+      runAsUser: 1000
+      allowPrivilegeEscalation: false
+    - name: maven
+      image: ${jnlpImage}
+      tty: true
+      securityContext:
+       runAsUser: 1000
+       allowPrivilegeEscalation: false
 """
     echo "${yaml}"
     def cloud = flow.getCloudConfig()
