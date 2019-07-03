@@ -12,8 +12,24 @@ def call(Map parameters = [:], body) {
     def mavenImage = parameters.get('mavenImage', 'openshift/jenkins-slave-maven-centos7:v3.11')
     def jnlpImage = (flow.isOpenShift()) ? 'quay.io/openshift/origin-jenkins-agent-base:v4.0' : 'jenkinsci/jnlp-slave:2.62'
     def inheritFrom = parameters.get('inheritFrom', 'base')
-
-
+    def yaml = """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+    - name: jnlp
+    image: ${jnlpImage}
+    tty: true
+    securityContext:
+      runAsUser: 1000
+      allowPrivilegeEscalation: false
+    - name: maven
+      image: ${mavenImage}
+      tty: true
+      securityContext:
+       runAsUser: 1000
+       allowPrivilegeEscalation: false
+"""
     def cloud = flow.getCloudConfig()
 
     /*
@@ -24,7 +40,7 @@ def call(Map parameters = [:], body) {
     if (utils.isUseOpenShiftS2IForBuilds()) {
         def mavenOpts = parameters.get('mavenOpts', '-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn')
 
-        podTemplate(cloud: cloud, label: label, inheritFrom: "${inheritFrom}", serviceAccount: 'jenkins',
+        podTemplate(cloud: cloud, label: label, inheritFrom: "${inheritFrom}", serviceAccount: 'jenkins', yaml: yaml,
                     containers: [
                         containerTemplate(
                                 name: 'jnlp',
@@ -62,6 +78,7 @@ def call(Map parameters = [:], body) {
         podTemplate(cloud: cloud,
                 label: label,
                 inheritFrom: "${inheritFrom}",
+                yaml: yaml,
                 containers: [
                         containerTemplate(
                                 //[name: 'jnlp', image: "${jnlpImage}", args: '${computer.jnlpmac} ${computer.name}'],
